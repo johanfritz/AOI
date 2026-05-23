@@ -8,6 +8,7 @@
 \usepackage{fontspec}      
 \usepackage[OT1]{fontenc}
 \usepackage{boisik} %absolutely goated font
+\usepackage{siunitx}
 \title{Rossby Wave Ray-tracing:\\A Modern Approach
 \\ \small A-O I, Tsinghua University}
 \author{Fritz, Johan Axel \\ \small 2026403126}
@@ -27,11 +28,11 @@
 	\end{abstract}
 
 	\section{Introduction}
+	The 1993 paper titled \emph{Rossby Wave Propagation on a Realistic Longitudinally Varying Flow} by Hoskins and Ambrizzi \cite{hoskins} suggests a model for 
 	Rossby waves are large-scale meanders in the jet stream that arise from Earth's rotation. They are responsible for linking weather and climate across distant regions—a phenomenon known as teleconnection. For example, El Niño warming in the tropical Pacific can influence winter temperatures in North America and Europe via Rossby wave trains.
 	
 	Hoskins and Ambrizzi (1993) showed that these waves do not propagate randomly. Instead, the background wind structure creates "waveguides"—preferred paths that channel wave energy. Their key tool was geometric ray tracing, adapted from optics.
 	
-	% TODO: Add 1-2 sentences stating your project goal (e.g., reproducing their ray paths from reanalysis data)
 	
 	\section{Theory}
 	
@@ -55,10 +56,16 @@
 	
 	\subsection{Data}
 	\begin{itemize}
-		\item Source: ERA5 reanalysis (ECMWF)
-		\item Variables: Zonal wind $U$ at 300 hPa
-		\item Time period: December-February climatology (1991-2020)
-		\item Spatial resolution: $2.5^\circ \times 2.5^\circ$
+		\item Source data:\begin{itemize}
+			\item ERA5 reanalysis
+			\item Spatial variables: zonal ($u$) and meridional ($v$) winds at \qty{300}{\hecto\Pa}
+			\item Time variable: Monthly from January 1940 to April 2026
+			\item Spatial resolution: $0.25^\circ \times 0.25^\circ$
+		\end{itemize}
+		\item Used data: \begin{itemize}
+			\item Time-averaged over December-February (referred to as DJF)
+			\item Spatial resolution: $2.5^\circ \times 2.5^\circ$
+		\end{itemize}
 	\end{itemize}
 	
 	\subsection{Computing $K_s$}
@@ -107,5 +114,6 @@
 	% - What are the limitations of the barotropic approximation? (neglects vertical structure, assumes linear waves)
 	% - How could this analysis be extended? (e.g., seasonal dependence, complex wavenumber ray tracing, comparison with observed lag-correlation maps)
 
-
+\bibliographystyle{plain}
+\bibliography{ref}
 \end{document}
