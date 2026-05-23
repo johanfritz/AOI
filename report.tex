@@ -1,0 +1,111 @@
+% !TeX spellcheck = en_US
+\documentclass[]{article}
+%\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{amsmath, amssymb}
+\usepackage{fontspec}      
+\usepackage[OT1]{fontenc}
+\usepackage{boisik} %absolutely goated font
+\title{Rossby Wave Ray-tracing:\\A Modern Approach
+\\ \small A-O I, Tsinghua University}
+\author{Fritz, Johan Axel \\ \small 2026403126}
+\date{\today}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{abstract}
+		
+		% TODO: Write 3-4 sentences after completing project
+		% - What question did you investigate?
+		% - What data/method did you use?
+		% - What were the main findings?
+		% - Why does it matter for atmosphere-ocean interactions?
+	\end{abstract}
+
+	\section{Introduction}
+	Rossby waves are large-scale meanders in the jet stream that arise from Earth's rotation. They are responsible for linking weather and climate across distant regions—a phenomenon known as teleconnection. For example, El Niño warming in the tropical Pacific can influence winter temperatures in North America and Europe via Rossby wave trains.
+	
+	Hoskins and Ambrizzi (1993) showed that these waves do not propagate randomly. Instead, the background wind structure creates "waveguides"—preferred paths that channel wave energy. Their key tool was geometric ray tracing, adapted from optics.
+	
+	% TODO: Add 1-2 sentences stating your project goal (e.g., reproducing their ray paths from reanalysis data)
+	
+	\section{Theory}
+	
+	\subsection{The Stationary Wavenumber $K_s$}
+	
+	The central concept in the paper is the stationary wavenumber $K_s$. It tells us, at each location in the atmosphere, what wavelength a Rossby wave must have to remain stationary relative to the ground. The formula is:
+	
+	\begin{equation}
+		K_s^2 = \frac{\beta_M - \partial^2 U / \partial y^2}{U}
+	\end{equation}
+	
+	Where $U$ is the background zonal wind and $\beta_M$ is the gradient of Earth's vorticity in Mercator coordinates. 
+	
+	When $K_s$ is large and uniform over a region, that region acts as a waveguide: waves of the appropriate scale are trapped and can travel long distances. When $K_s^2$ becomes negative, waves cannot propagate at all (they are "evanescent").
+	
+	\subsection{Ray Tracing}
+	
+	Ray tracing treats a wave packet as a particle whose position $(x, y)$ and wavenumber $(k, l)$ evolve according to Hamilton's equations. The key idea is that waves bend toward regions of higher $K_s$, similar to how light bends in a medium with varying refractive index. By integrating these equations forward from a source location, we can predict where wave energy will go.
+	
+	\section{Data and Methods}
+	
+	\subsection{Data}
+	\begin{itemize}
+		\item Source: ERA5 reanalysis (ECMWF)
+		\item Variables: Zonal wind $U$ at 300 hPa
+		\item Time period: December-February climatology (1991-2020)
+		\item Spatial resolution: $2.5^\circ \times 2.5^\circ$
+	\end{itemize}
+	
+	\subsection{Computing $K_s$}
+	% TODO: Describe your implementation steps
+	% - Convert to Mercator coordinates
+	% - Compute meridional derivatives using finite differences
+	% - Apply smoothing to remove noise
+	% - Handle regions where U is small or negative
+	
+	\subsection{Ray Tracing Implementation}
+%	\begin{itemize}
+%		\item ODE integration: 4th-order Runge-Kutta
+%		\item Time step: 0.25 days, total integration: 30 days
+%		\item Source locations (matching the paper):
+%		\begin{itemize}
+%			\item Tropical Pacific: ($160^\circ$W, $0^\circ$N)
+%			\item North Atlantic: ($40^\circ$W, $30^\circ$N)
+%			\item Indian Ocean: ($80^\circ$E, $20^\circ$N)
+%		\end{itemize}
+%		\item Interpolation: Bilinear for $U$ and $K_s^2$ fields
+%	\end{itemize}
+	
+	\section{Results}
+
+	
+	% TODO: Describe what you see:
+	% - Where is Ks highest? (Asian jet: roughly 30-45°N, 80-160°E)
+	% - What values? (expect Ks ≈ 6-8 → stationary wavelength ≈ 4500-6000 km)
+	% - Secondary waveguides? (North Atlantic, Southern Hemisphere)
+	% - Where is propagation blocked? (subtropics, continents)
+
+	% TODO: Describe the Atlantic source rays:
+	% - Are they trapped in the North Atlantic waveguide?
+	% - Do some rays reach Europe?
+	
+	\subsection{Comparison with Hoskins \& Ambrizzi (1993)}
+	% TODO: Compare your results to the paper's figures (e.g., their Figure 8 or 10)
+	% - Overall agreement? (waveguide locations, ray directions)
+	% - Any differences? (possible reasons: different climatology, resolution, smoothing choices)
+	
+	\section{Discussion}
+	% TODO: Address the following questions (as bullet points or short paragraphs)
+	% 
+	% - What are the main waveguides you identified, and how do they compare to the paper?
+	% - Do your ray paths from the tropical Pacific reproduce the expected PNA teleconnection?
+	% - What are the limitations of the barotropic approximation? (neglects vertical structure, assumes linear waves)
+	% - How could this analysis be extended? (e.g., seasonal dependence, complex wavenumber ray tracing, comparison with observed lag-correlation maps)
+
+
+\end{document}
