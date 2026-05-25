@@ -28,15 +28,16 @@
 	\end{abstract}
 
 	\section{Introduction}
-	The 1993 paper titled \emph{Rossby Wave Propagation on a Realistic Longitudinally Varying Flow} by Hoskins and Ambrizzi \cite{hoskins} suggests a model for 
-	Rossby waves are large-scale meanders in the jet stream that arise from Earth's rotation. They are responsible for linking weather and climate across distant regions—a phenomenon known as teleconnection. For example, El Niño warming in the tropical Pacific can influence winter temperatures in North America and Europe via Rossby wave trains.
+	Rossby waves are large-scale waves that appear in stratified fluids on rotating bodies \cite{rossby}. On earth, they appear both in the atmosphere and oceans and are almost perpendicular to the earth's axis of rotation. Atmospheric Rossby waves were first described in 1939 by Swedish-American meteorologist Carl\mbox{-}Gustaf~Rossby. 
 	
-	Hoskins and Ambrizzi (1993) showed that these waves do not propagate randomly. Instead, the background wind structure creates "waveguides"—preferred paths that channel wave energy. Their key tool was geometric ray tracing, adapted from optics.
+	This project will consider atmospheric Rossby waves and make use of modern numerical algorithms to analyze their behavior. Much of the work is based on the 1993 paper \emph{Rossby Wave Propagation on a Realistic Longitudinally Varying Flow} by Hoskins and Ambrizzi \cite{hoskins}. This paper, however, differs in that different numerical methods for solving the problem will be compared. 
 	
 	
 	\section{Theory}
-	
+	This section serves as a brief introduction to the mathematical interpretations of Rossby waves, as well as to some of the numerical methods used. 
 	\subsection{The Stationary Wavenumber $K_s$}
+	Central to any theory dealing with waves is the concept of a wavenumber $K$ which describes the spatial frequency of a wave. Its definition is simply the reciprocal of the wavelength $\lambda$, i.e. $K=\tfrac1\lambda$. For
+	
 	
 	The central concept in the paper is the stationary wavenumber $K_s$. It tells us, at each location in the atmosphere, what wavelength a Rossby wave must have to remain stationary relative to the ground. The formula is:
 	

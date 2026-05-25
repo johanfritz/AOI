@@ -1,1 +1,7 @@
 *.nc
+code/__pycache__
+*.aux
+*.bbl
+*.fdb_latexmk
+*.fls
+*.log
