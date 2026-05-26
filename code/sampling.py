@@ -18,7 +18,3 @@ def downsample(u, v, lat, lon):
     lat = np.array([90 - 1.25 - n * 2.5 for n in range(72)])
     lon = np.array([1.25 + n * 2.5 for n in range(144)])
     return u_coarse, v_coarse, lat, lon
-
-
-u, v, lat, lon = load_data()
-u, v, lat, lon = downsample(u, v, lat, lon)

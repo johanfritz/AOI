@@ -9,6 +9,7 @@
 \usepackage[OT1]{fontenc}
 \usepackage{boisik} %absolutely goated font
 \usepackage{siunitx}
+\usepackage{hyperref}
 \title{Rossby Wave Ray-tracing:\\A Modern Approach
 \\ \small A-O I, Tsinghua University}
 \author{Fritz, Johan Axel \\ \small 2026403126}
@@ -53,22 +54,28 @@
 	
 	Ray tracing treats a wave packet as a particle whose position $(x, y)$ and wavenumber $(k, l)$ evolve according to Hamilton's equations. The key idea is that waves bend toward regions of higher $K_s$, similar to how light bends in a medium with varying refractive index. By integrating these equations forward from a source location, we can predict where wave energy will go.
 	
-	\section{Data and Methods}
-	
+	\section{Method}
+	The source code for this project is available in its entirety on \href{https://github.com/johanfritz/AOI}{github}. 
 	\subsection{Data}
-	\begin{itemize}
-		\item Source data:\begin{itemize}
-			\item ERA5 reanalysis
-			\item Spatial variables: zonal ($u$) and meridional ($v$) winds at \qty{300}{\hecto\Pa}
-			\item Time variable: Monthly from January 1940 to April 2026
-			\item Spatial resolution: $0.25^\circ \times 0.25^\circ$
-		\end{itemize}
-		\item Used data: \begin{itemize}
-			\item Time-averaged over December-February (referred to as DJF)
-			\item Spatial resolution: $2.5^\circ \times 2.5^\circ$
-		\end{itemize}
-	\end{itemize}
+	The source data is provided by the European Centre for Medium-Range Weather Forecasts, and downloaded from \href{https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview}{Copernicus data store}. It consists of winds in $u$- and $v$-directions at a pressure level of \qty{300}{\hecto\Pa}, analogous to the work of Hoskins and Ambrizzi. In the time domain, the data is provided monthly from January 1940 to May 2026. The spatial domain covers the entire Earth, and is supplied in a grid with size \qty{0.25}{\degree}. 
 	
+	Before any calculations are done, the entire dataset is time-averaged for the months December through February (DJF), for the entire available time period. Thus, the data used in the project is a $721\times1440$ spatial grid for the variables $u$ and $v$. The code for time averaging the data is available in the file \texttt{timeavg.py}, and the final time-averaged data is available in the NumPy archive \texttt{djf\_mean.npz} which contains variables \texttt{u}, \texttt{v}, \texttt{lat}, and \texttt{lon}.
+	
+	\subsection{Absolute vorticity}
+	The absolute vorticity $q$ is depends on the curl of the wind field, and the Coriolis factor. Its definition is
+	\begin{equation*}
+		q=\nabla\times(u, v)+2\Omega\sin(\phi)
+	\end{equation*}
+	in which $(u, v)$ is the wind vector field, $\Omega$ is the rotational frequency of the Earth, and $\phi$ is the latitude. Since the wind field is given in spherical coordinates, the (radial component of the-) curl operator $\nabla_R\times$ is defined as:
+	\begin{equation*}
+		\frac{1}{R\cos\phi}\left[\frac{\partial v}{\partial \lambda}-\frac{\partial}{\partial \phi}u\cos\phi\right]
+	\end{equation*}
+	which simplifies to:
+	\begin{equation*}
+		\frac{1}{R\cos\phi}\frac{\partial v}{\partial \lambda}-\frac{1}{R}\frac{\partial u}{\partial \phi}+\frac{u\tan\phi}{R}.
+	\end{equation*}
+	The derivatives are calculated using a central difference approximation, i.e. $f^\prime(i)=\tfrac{f(i+1)-f(i-1)}{2h}$ with $h$ being the grid size, and vice versa. For the boundaries at the poles, approximation is instead $f^\prime(0)=\tfrac{f(1)-f(0)}{h}$. Since the dataset is cyclic longitudinally, the central difference approximation can be used as-is on the longitudinal 'boundary': $f^\prime(0)=\tfrac{f(-1)-f(1)}{2h}$.
+	 
 	\subsection{Computing $K_s$}
 	% TODO: Describe your implementation steps
 	% - Convert to Mercator coordinates
